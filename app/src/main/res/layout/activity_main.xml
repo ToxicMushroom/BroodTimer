@@ -28,16 +28,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true">
-
-        <TextView
-            android:id="@+id/no_reminder_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:textColor="@android:color/white"
-            android:gravity="center"
-            android:padding="16dp"
-            android:text="@string/klik_op_de_onderstaande_knop_om_een_timer_op_te_zetten" />
     </RelativeLayout>
 
     <android.support.design.widget.FloatingActionButton
