@@ -1,0 +1,545 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        app:contentInsetLeft="0dp"
+        app:contentInsetStart="16dp"
+        app:popupTheme="@style/Theme.AppCompat.Light"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <LinearLayout
+        android:id="@+id/add_reminder_layout_top"
+        android:layout_width="match_parent"
+        android:layout_height="108dp"
+        android:background="@color/colorPrimary"
+        android:orientation="vertical"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <EditText
+            android:id="@+id/reminder_title"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:gravity="bottom|left"
+            android:hint="naam/soort brood"
+            android:lines="4"
+            android:minLines="4"
+            android:scrollHorizontally="false"
+            android:textColor="@android:color/white"
+            android:textColorHint="@color/primary_text_disabled_material_dark"
+            android:textSize="25sp"
+            tools:ignore="PrivateResource,RtlHardcoded" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/add_reminder_layout_top">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/details"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:layout_marginTop="8dp"
+                android:gravity="center_vertical"
+                android:text="Fase settings"
+                android:textColor="@color/abc_secondary_text_material_dark"
+                android:textSize="16sp"
+                android:textAlignment="center"
+                tools:ignore="PrivateResource" />
+            <RelativeLayout
+                android:id="@+id/rlPhaseOne"
+                android:layout_width="match_parent"
+                android:clickable="true"
+                android:onClick="setPhaseOne"
+                android:layout_height="72dp"
+                android:focusable="true">
+                <ImageView
+                    android:id="@+id/ivPhaseOne"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="32dp"
+                    android:src="@drawable/ic_add_black_24dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="32dp" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/ivPhaseOne"
+                    android:layout_toEndOf="@id/ivPhaseOne">
+
+                    <TextView
+                        android:id="@+id/tvTitlePhaseOne"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/PhaseOneTitle"
+                        android:textColor="@color/abc_primary_text_material_dark"
+                        android:textSize="15sp"
+                        tools:ignore="PrivateResource" />
+                    <TextView
+                        android:id="@+id/tvSettingsPhaseOne"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        android:textColor="@color/abc_secondary_text_material_dark"
+                        android:text="@string/PhaseOneDefault"
+                        android:inputType="number"
+                        tools:ignore="PrivateResource,TextViewEdits" />
+
+                </LinearLayout>
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/rlPhaseTwo"
+                android:layout_width="match_parent"
+                android:clickable="true"
+                android:onClick="setPhaseTwo"
+                android:layout_height="72dp"
+                android:focusable="true">
+                <ImageView
+                    android:id="@+id/ivPhaseTwo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="32dp"
+                    android:src="@drawable/ic_add_black_24dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="32dp" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/ivPhaseTwo"
+                    android:layout_toEndOf="@id/ivPhaseTwo">
+
+                    <TextView
+                        android:id="@+id/tvTitlePhaseTwo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/PhaseTwoTitle"
+                        android:textColor="@color/abc_primary_text_material_dark"
+                        android:textSize="15sp"
+                        tools:ignore="PrivateResource" />
+                    <TextView
+                        android:id="@+id/tvSettingsPhaseTwo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        android:textColor="@color/abc_secondary_text_material_dark"
+                        android:text="@string/PhaseTwoDefault"
+                        android:inputType="number"
+                        tools:ignore="PrivateResource,TextViewEdits" />
+                </LinearLayout>
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/rlPhaseThree"
+                android:layout_width="match_parent"
+                android:clickable="true"
+                android:onClick="setPhaseThree"
+                android:layout_height="72dp"
+                android:focusable="true">
+                <ImageView
+                    android:id="@+id/ivPhaseThree"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="32dp"
+                    android:src="@drawable/ic_add_black_24dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="32dp" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/ivPhaseThree"
+                    android:layout_toEndOf="@id/ivPhaseThree">
+
+                    <TextView
+                        android:id="@+id/tvTitlePhaseThree"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/PhaseThreeTitle"
+                        android:textColor="@color/abc_primary_text_material_dark"
+                        android:textSize="15sp"
+                        tools:ignore="PrivateResource" />
+                    <TextView
+                        android:id="@+id/tvSettingsPhaseThree"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        android:textColor="@color/abc_secondary_text_material_dark"
+                        android:text="@string/PhaseThreeDefault"
+                        android:inputType="number"
+                        tools:ignore="PrivateResource,TextViewEdits" />
+                </LinearLayout>
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/rlPhaseFour"
+                android:layout_width="match_parent"
+                android:clickable="true"
+                android:onClick="setPhaseFour"
+                android:layout_height="72dp"
+                android:focusable="true">
+                <ImageView
+                    android:id="@+id/ivPhaseFour"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="32dp"
+                    android:src="@drawable/ic_add_black_24dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="32dp" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/ivPhaseFour"
+                    android:layout_toEndOf="@id/ivPhaseFour">
+
+                    <TextView
+                        android:id="@+id/tvTitlePhaseFour"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/PhaseFourTitle"
+                        android:textColor="@color/abc_primary_text_material_dark"
+                        android:textSize="15sp"
+                        tools:ignore="PrivateResource" />
+                    <TextView
+                        android:id="@+id/tvSettingsPhaseFour"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        android:textColor="@color/abc_secondary_text_material_dark"
+                        android:text="@string/PhaseFourDefault"
+                        android:inputType="number"
+                        tools:ignore="PrivateResource,TextViewEdits" />
+                </LinearLayout>
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/rlPhaseFive"
+                android:layout_width="match_parent"
+                android:clickable="true"
+                android:onClick="setPhaseFive"
+                android:layout_height="72dp"
+                android:focusable="true">
+                <ImageView
+                    android:id="@+id/ivPhaseFive"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="32dp"
+                    android:src="@drawable/ic_add_black_24dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="32dp" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/ivPhaseFive"
+                    android:layout_toEndOf="@id/ivPhaseFive">
+
+                    <TextView
+                        android:id="@+id/tvTitlePhaseFive"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/PhaseFiveTitle"
+                        android:textColor="@color/abc_primary_text_material_dark"
+                        android:textSize="15sp"
+                        tools:ignore="PrivateResource" />
+                    <TextView
+                        android:id="@+id/tvSettingsPhaseFive"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        android:textColor="@color/abc_secondary_text_material_dark"
+                        android:text="@string/PhaseFiveDefault"
+                        android:inputType="number"
+                        tools:ignore="PrivateResource,TextViewEdits" />
+                </LinearLayout>
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/rlPhaseSix"
+                android:layout_width="match_parent"
+                android:clickable="true"
+                android:onClick="setPhaseSix"
+                android:layout_height="72dp"
+                android:focusable="true">
+                <ImageView
+                    android:id="@+id/ivPhaseSix"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="32dp"
+                    android:src="@drawable/ic_add_black_24dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="32dp" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/ivPhaseSix"
+                    android:layout_toEndOf="@id/ivPhaseSix">
+
+                    <TextView
+                        android:id="@+id/tvTitlePhaseSix"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/PhaseSixTitle"
+                        android:textColor="@color/abc_primary_text_material_dark"
+                        android:textSize="15sp"
+                        tools:ignore="PrivateResource" />
+                    <TextView
+                        android:id="@+id/tvSettingsPhaseSix"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        android:textColor="@color/abc_secondary_text_material_dark"
+                        android:text="@string/PhaseSixDefault"
+                        android:inputType="number"
+                        tools:ignore="PrivateResource,TextViewEdits" />
+                </LinearLayout>
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/rlPhaseSeven"
+                android:layout_width="match_parent"
+                android:clickable="true"
+                android:onClick="setPhaseSeven"
+                android:layout_height="72dp"
+                android:focusable="true">
+                <ImageView
+                    android:id="@+id/ivPhaseSeven"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="32dp"
+                    android:src="@drawable/ic_add_black_24dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="32dp" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/ivPhaseSeven"
+                    android:layout_toEndOf="@id/ivPhaseSeven">
+
+                    <TextView
+                        android:id="@+id/tvTitlePhaseSeven"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/PhaseSevenTitle"
+                        android:textColor="@color/abc_primary_text_material_dark"
+                        android:textSize="15sp"
+                        tools:ignore="PrivateResource" />
+                    <TextView
+                        android:id="@+id/tvSettingsPhaseSeven"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        android:textColor="@color/abc_secondary_text_material_dark"
+                        android:text="@string/PhaseSevenDefault"
+                        android:inputType="number"
+                        tools:ignore="PrivateResource,TextViewEdits" />
+                </LinearLayout>
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/rlPhaseEight"
+                android:layout_width="match_parent"
+                android:clickable="true"
+                android:onClick="setPhaseEight"
+                android:layout_height="72dp"
+                android:focusable="true">
+                <ImageView
+                    android:id="@+id/ivPhaseEight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="32dp"
+                    android:src="@drawable/ic_add_black_24dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="32dp" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/ivPhaseEight"
+                    android:layout_toEndOf="@id/ivPhaseEight">
+
+                    <TextView
+                        android:id="@+id/tvTitlePhaseEight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/PhaseEightTitle"
+                        android:textColor="@color/abc_primary_text_material_dark"
+                        android:textSize="15sp"
+                        tools:ignore="PrivateResource" />
+                    <TextView
+                        android:id="@+id/tvSettingsPhaseEight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        android:textColor="@color/abc_secondary_text_material_dark"
+                        android:text="@string/PhaseEightDefault"
+                        android:inputType="number"
+                        tools:ignore="PrivateResource,TextViewEdits" />
+                </LinearLayout>
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/rlPhaseNine"
+                android:layout_width="match_parent"
+                android:clickable="true"
+                android:onClick="setPhaseNine"
+                android:layout_height="72dp"
+                android:focusable="true">
+                <ImageView
+                    android:id="@+id/ivPhaseNine"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="32dp"
+                    android:src="@drawable/ic_add_black_24dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="32dp" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/ivPhaseNine"
+                    android:layout_toEndOf="@id/ivPhaseNine">
+
+                    <TextView
+                        android:id="@+id/tvTitlePhaseNine"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/PhaseNineTitle"
+                        android:textColor="@color/abc_primary_text_material_dark"
+                        android:textSize="15sp"
+                        tools:ignore="PrivateResource" />
+                    <TextView
+                        android:id="@+id/tvSettingsPhaseNine"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        android:textColor="@color/abc_secondary_text_material_dark"
+                        android:text="@string/PhaseNineDefault"
+                        android:inputType="number"
+                        tools:ignore="PrivateResource,TextViewEdits" />
+                </LinearLayout>
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/rlPhaseTen"
+                android:layout_width="match_parent"
+                android:clickable="true"
+                android:onClick="setPhaseTen"
+                android:layout_height="72dp"
+                android:focusable="true">
+                <ImageView
+                    android:id="@+id/ivPhaseTen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="32dp"
+                    android:src="@drawable/ic_add_black_24dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="32dp" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/ivPhaseTen"
+                    android:layout_toEndOf="@id/ivPhaseTen">
+
+                    <TextView
+                        android:id="@+id/tvTitlePhaseTen"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/PhaseTenTitle"
+                        android:textColor="@color/abc_primary_text_material_dark"
+                        android:textSize="15sp"
+                        tools:ignore="PrivateResource" />
+                    <TextView
+                        android:id="@+id/tvSettingsPhaseTen"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        android:textColor="@color/abc_secondary_text_material_dark"
+                        android:text="@string/PhaseTenDefault"
+                        android:inputType="number"
+                        tools:ignore="PrivateResource,TextViewEdits" />
+                </LinearLayout>
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/rlCreate"
+                android:layout_width="match_parent"
+                android:clickable="true"
+                android:onClick="setPhaseTen"
+                android:layout_height="72dp"
+                android:focusable="true">
+                <Button
+                    android:id="@+id/btnCreate"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/black"
+                    android:textColor="@android:color/white"
+                    android:textSize="25sp"
+                    android:text="Create"
+                    />
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

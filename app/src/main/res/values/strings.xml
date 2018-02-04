@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Brood Timer</string>
+    <string name="action_settings">Settings</string>
+    <string name="klik_op_de_onderstaande_knop_om_een_timer_op_te_zetten">Klik op de onderstaande knop om een timer op te zetten.</string>
+    <string name="PhaseOneDefault">2</string>
+    <string name="PhaseOneTitle">bloem + water fase</string>
+    <string name="PhaseTwoDefault">25</string>
+    <string name="PhaseTwoTitle">hydrolyse fase</string>
+    <string name="PhaseThreeTitle">gist, zout en boter mengen</string>
+    <string name="PhaseThreeDefault">1</string>
+    <string name="PhaseFourTitle">kneden</string>
+    <string name="PhaseFourDefault">5</string>
+    <string name="PhaseFiveTitle">eerste rijs</string>
+    <string name="PhaseFiveDefault">45</string>
+    <string name="PhaseSixTitle">terugslaan en opbollen</string>
+    <string name="PhaseSixDefault">3</string>
+    <string name="PhaseSevenTitle">rusten</string>
+    <string name="PhaseSevenDefault">10</string>
+    <string name="PhaseEightTitle">vorm geven</string>
+    <string name="PhaseEightDefault">3</string>
+    <string name="PhaseNineTitle">tweede rijs</string>
+    <string name="PhaseNineDefault">90</string>
+    <string name="PhaseTenTitle">bakken in oven</string>
+    <string name="PhaseTenDefault">35</string>
+</resources>
