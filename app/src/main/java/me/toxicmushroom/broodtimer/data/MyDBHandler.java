@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class MyDBHandler extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 12;
+    private static final int DATABASE_VERSION = 13;
     private static final String DATABASE_NAME = "broden.db";
     public static final String TABLE_BRODEN = "broden";
     public static final String COLUMN_BROODNAAM = "broodnaam";

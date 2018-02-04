@@ -3,6 +3,7 @@ package me.toxicmushroom.broodtimer;
 import android.content.ContentValues;
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +24,7 @@ public class BroodAdapter extends RecyclerView.Adapter<BroodAdapter.BroodViewHol
 
     Context context;
     List<Broden> brodenList;
-    BitmapDrawable placeHolder;
+    Drawable placeHolder;
 
     public BroodAdapter(Context context, List<Broden> broden) {
         brodenList = new ArrayList<>();
@@ -31,7 +32,7 @@ public class BroodAdapter extends RecyclerView.Adapter<BroodAdapter.BroodViewHol
             brodenList.addAll(broden);
         }
         this.context = context;
-        placeHolder = (BitmapDrawable) context.getResources().getDrawable(R.drawable.ic_pause_black_24dp);
+        placeHolder = context.getResources().getDrawable(R.drawable.ic_pause_black_24dp);
     }
 
     public void addItem(Broden brood) {

@@ -45,16 +45,7 @@ public class MainActivity extends AppCompatActivity {
         broodListView.setLayoutManager(new LinearLayoutManager(this));
         broodAdapter = new BroodAdapter(this, myDBHandler.getAlleBroden());
         broodListView.setAdapter(broodAdapter);
-
-        for (Broden brood : myDBHandler.getAlleBroden()) {
-            RelativeLayout relativeLayout = findViewById(R.id.broodDisplay);
-            TextView broodNaam = findViewById(R.id.recycle_title);
-            TextView phaseProgress = findViewById(R.id.recycle_brood_phase_now);
-            TextView phaseIncomming = findViewById(R.id.recycle_brood_phase_incomming);
-            ImageView thumbNailImage = findViewById(R.id.thumbnail_image);
-            broodNaam.setText(brood.get_broodnaam());
-            broodListView.addView(relativeLayout);
-        }
+        broodAdapter.setItems(myDBHandler.getAlleBroden());
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), AddBroodActivity.class)));
