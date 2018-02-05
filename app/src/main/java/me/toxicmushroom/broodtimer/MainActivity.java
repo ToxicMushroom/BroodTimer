@@ -10,16 +10,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import me.toxicmushroom.broodtimer.data.Broden;
 import me.toxicmushroom.broodtimer.data.MyDBHandler;
+import me.toxicmushroom.broodtimer.reminder.PhaseService;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView broodListView;
     BroodAdapter broodAdapter;
     Toolbar toolbar;
+    ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +49,11 @@ public class MainActivity extends AppCompatActivity {
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), AddBroodActivity.class)));
+
+        Runnable runnable = () -> {
+            broodAdapter.notifyDataSetChanged();
+        };
+        executorService.scheduleAtFixedRate(runnable, 1, 500, TimeUnit.MILLISECONDS);
     }
 
     @Override
@@ -68,6 +73,13 @@ public class MainActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        }
+
+        if (id == R.id.action_reset) {
+            for (Broden brood : myDBHandler.getAlleBroden()) {
+                myDBHandler.deleteBrood(brood.get_broodnaam());
+                stopService(new Intent(getApplicationContext(), PhaseService.class));
+            }
         }
 
         return super.onOptionsItemSelected(item);

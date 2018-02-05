@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
     package="me.toxicmushroom.broodtimer">
 
     <application
@@ -21,7 +22,14 @@
         <activity
             android:name="AddBroodActivity"
             android:label="BroodMaker"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <service
+            android:name=".reminder.PhaseService"
+            android:enabled="true"
+            android:exported="false"
+            android:isolatedProcess="false"
+            android:label="BroodService"
+            />
     </application>
 </manifest>

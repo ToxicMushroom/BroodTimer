@@ -1,5 +1,6 @@
 package me.toxicmushroom.broodtimer;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.toxicmushroom.broodtimer.data.Broden;
+import me.toxicmushroom.broodtimer.data.MyDBHandler;
 
 /**
  * Created by Merlijn on 4/02/2018.
@@ -25,6 +27,7 @@ public class BroodAdapter extends RecyclerView.Adapter<BroodAdapter.BroodViewHol
     Context context;
     List<Broden> brodenList;
     Drawable placeHolder;
+    MyDBHandler myDBHandler;
 
     public BroodAdapter(Context context, List<Broden> broden) {
         brodenList = new ArrayList<>();
@@ -32,6 +35,7 @@ public class BroodAdapter extends RecyclerView.Adapter<BroodAdapter.BroodViewHol
             brodenList.addAll(broden);
         }
         this.context = context;
+        myDBHandler = new MyDBHandler(context, null, null, 0);
         placeHolder = context.getResources().getDrawable(R.drawable.ic_pause_black_24dp);
     }
 
@@ -54,13 +58,15 @@ public class BroodAdapter extends RecyclerView.Adapter<BroodAdapter.BroodViewHol
         return broodViewHolder;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(BroodAdapter.BroodViewHolder holder, int position) {
         Broden brood = brodenList.get(position);
         holder.icon.setImageDrawable(placeHolder);
         holder.title.setText(brood.get_broodnaam());
-        holder.currentPhase.setText(":|");
-        holder.nextPhase.setText(":|");
+        holder.currentPhase.setText(myDBHandler.getData("brodenVooruitgang", "currentPhaseTime", brood.get_broodnaam()) + " seconden voorbij.");
+        holder.nextPhase.setText("Nog " + myDBHandler.getData("brodenVooruitgang", "untilPhaseTime", brood.get_broodnaam()) + " seconden tot fase" +
+                myDBHandler.getData("brodenVooruitgang", "nextPhase", brood.get_broodnaam()));
     }
 
     @Override

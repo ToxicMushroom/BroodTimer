@@ -1,5 +1,6 @@
 package me.toxicmushroom.broodtimer;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -14,6 +15,7 @@ import java.util.Collection;
 
 import me.toxicmushroom.broodtimer.data.Broden;
 import me.toxicmushroom.broodtimer.data.MyDBHandler;
+import me.toxicmushroom.broodtimer.reminder.PhaseService;
 
 /**
  * Created by Merlijn on 27/12/2017.
@@ -74,6 +76,13 @@ public class AddBroodActivity extends AppCompatActivity implements InputDialog.I
                 if (view.getContext().toString() == null) accept = false;
             }
             if (accept && !broodNaamEditor.getText().toString().equalsIgnoreCase("")) {
+                for (Broden broodje : dbHandler.getAlleBroden()) {
+                    if (broodje.get_broodnaam().equalsIgnoreCase(broodNaamEditor.getText().toString())) {
+                        Toast toast = Toast.makeText(getApplicationContext(), "De broodnaam: '" + broodNaamEditor.getText().toString() + "' is al in gebruik.", Toast.LENGTH_LONG);
+                        toast.show();
+                        return;
+                    }
+                }
                 Broden broodje = new Broden();
                 broodje.set_broodnaam(broodNaamEditor.getText().toString());
                 broodje.setFases(
@@ -89,6 +98,9 @@ public class AddBroodActivity extends AppCompatActivity implements InputDialog.I
                         Integer.valueOf(ten.getText().toString())
                 );
                 dbHandler.addBrood(broodje);
+                Intent intent = new Intent(this, PhaseService.class);
+                startService(intent);
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
             } else {
                 Toast toast = Toast.makeText(getApplicationContext(), "Je hebt niet alle waardes ingevuld!", Toast.LENGTH_SHORT);
                 toast.show();

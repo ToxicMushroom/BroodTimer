@@ -7,13 +7,15 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 
+import me.toxicmushroom.broodtimer.reminder.PhaseService;
+
 /**
  * Created by Merlijn on 27/12/2017.
  */
 
 public class MyDBHandler extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 13;
+    private static final int DATABASE_VERSION = 16;
     private static final String DATABASE_NAME = "broden.db";
     public static final String TABLE_BRODEN = "broden";
     public static final String COLUMN_BROODNAAM = "broodnaam";
@@ -51,7 +53,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE IF NOT EXISTS brodenVooruitgang (" +
                 COLUMN_BROODNAAM + " TEXT, currentPhase TEXT, nextPhase TEXT, currentPhaseTime TEXT, untilPhaseTime TEXT, totalTimePast TEXT, totalTimeComming TEXT);");
         db.execSQL("CREATE TABLE IF NOT EXISTS latestBrood" + " (" +
-        COLUMN_BROODNAAM + " TEXT, " +
+                COLUMN_BROODNAAM + " TEXT, " +
                 COLUMN_FASE1 + " TEXT, " +
                 COLUMN_FASE2 + " TEXT, " +
                 COLUMN_FASE3 + " TEXT, " +
@@ -123,8 +125,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
                     0 + "', '" +
                     brood.getFase1() + "', '" +
                     0 + "', '" +
-                    (brood.getFase1() + brood.getFase2() + brood.getFase3() + brood.getFase4() + brood.getFase5() +
-                            brood.getFase6() + brood.getFase7() + brood.getFase8() + brood.getFase9() + brood.getFase10() ) + "');");
+                    (brood.getAllFases()) + "');");
             db.execSQL("INSERT INTO " + TABLE_BRODEN + " (" +
                     COLUMN_BROODNAAM + ", " +
                     COLUMN_FASE1 + ", " +
@@ -158,16 +159,17 @@ public class MyDBHandler extends SQLiteOpenHelper {
     public void deleteBrood(String broodnaam) {
         SQLiteDatabase db = getWritableDatabase();
         if (db != null) {
-            db.execSQL("DELETE FROM " + TABLE_BRODEN + " WHERE " + COLUMN_BROODNAAM + "=" + broodnaam + ";");
+            db.execSQL("DELETE FROM " + TABLE_BRODEN + " WHERE " + COLUMN_BROODNAAM + "= '" + broodnaam + "';" +
+                    " DELETE FROM brodenVooruitgang WHERE " + COLUMN_BROODNAAM + "= '" + broodnaam + "'");
             db.close();
         }
     }
 
-    public String getContentFromColumn(String broodnaam, String column) {
+    public String getData(String database, String column, String broodNaam) {
         String toReturn = null;
         SQLiteDatabase db = getWritableDatabase();
         if (db != null) {
-            Cursor c = db.rawQuery("SELECT " + column + " FROM " + broodnaam, null);
+            Cursor c = db.rawQuery("SELECT " + column + " FROM " + database + " WHERE " + COLUMN_BROODNAAM + "= '" + broodNaam + "'", null);
             c.moveToFirst();
             toReturn = c.getString(0);
             c.close();
@@ -199,6 +201,54 @@ public class MyDBHandler extends SQLiteOpenHelper {
         c.close();
         db.close();
         return broden;
+    }
+
+    public void updateBroodProgress(Broden brood, int currentPhase, int currentPhaseProgress, int totalTimePast) {
+        long totalTimeComming = (brood.getAllFases() - totalTimePast);
+        int nextPhase = currentPhase + 1;
+        int untilNextPhaseTime = 0;
+        switch (currentPhase) {
+            case 0:
+                untilNextPhaseTime = brood.getFase1() * 60 - currentPhaseProgress;
+                break;
+            case 1:
+                untilNextPhaseTime = brood.getFase2() * 60 - currentPhaseProgress;
+                break;
+            case 2:
+                untilNextPhaseTime = brood.getFase3() * 60 - currentPhaseProgress;
+                break;
+            case 3:
+                untilNextPhaseTime = brood.getFase4() * 60 - currentPhaseProgress;
+                break;
+            case 4:
+                untilNextPhaseTime = brood.getFase5() * 60 - currentPhaseProgress;
+                break;
+            case 5:
+                untilNextPhaseTime = brood.getFase6() * 60 - currentPhaseProgress;
+                break;
+            case 6:
+                untilNextPhaseTime = brood.getFase7() * 60 - currentPhaseProgress;
+                break;
+            case 7:
+                untilNextPhaseTime = brood.getFase8() * 60 - currentPhaseProgress;
+                break;
+            case 8:
+                untilNextPhaseTime = brood.getFase9() * 60 - currentPhaseProgress;
+                break;
+            case 9:
+                untilNextPhaseTime = brood.getFase10() * 60 - currentPhaseProgress;
+                break;
+        }
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("UPDATE brodenVooruitgang SET " +
+                "currentPhase= '" + currentPhase + "', " +
+                "nextPhase= '" + nextPhase + "', " +
+                "currentPhaseTim= '" + currentPhaseProgress + "', " +
+                "untilPhaseTime= '" + untilNextPhaseTime + "', " +
+                "totalTimePast= '" + totalTimePast + "', " +
+                "totalTimeComming= '" + totalTimeComming + "' WHERE " +
+                COLUMN_BROODNAAM + "= '" + brood.get_broodnaam() + "';");
+
     }
 
     public ArrayList<Broden> getAlleBroden() {

@@ -75,4 +75,8 @@ public class Broden {
     public int getFase10() {
         return fase10;
     }
+
+    public long getAllFases() {
+        return (getFase1() + getFase2() + getFase3() + getFase4() + getFase5() + getFase6() + getFase7() + getFase8() + getFase9() + getFase10());
+    }
 }
