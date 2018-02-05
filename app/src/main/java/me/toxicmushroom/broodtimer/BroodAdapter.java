@@ -31,9 +31,7 @@ public class BroodAdapter extends RecyclerView.Adapter<BroodAdapter.BroodViewHol
 
     public BroodAdapter(Context context, List<Broden> broden) {
         brodenList = new ArrayList<>();
-        if (brodenList != null) {
-            brodenList.addAll(broden);
-        }
+        brodenList.addAll(broden);
         this.context = context;
         myDBHandler = new MyDBHandler(context, null, null, 0);
         placeHolder = context.getResources().getDrawable(R.drawable.ic_pause_black_24dp);

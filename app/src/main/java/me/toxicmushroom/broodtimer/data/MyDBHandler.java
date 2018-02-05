@@ -243,7 +243,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
         db.execSQL("UPDATE brodenVooruitgang SET " +
                 "currentPhase= '" + currentPhase + "', " +
                 "nextPhase= '" + nextPhase + "', " +
-                "currentPhaseTim= '" + currentPhaseProgress + "', " +
+                "currentPhaseTime= '" + currentPhaseProgress + "', " +
                 "untilPhaseTime= '" + untilNextPhaseTime + "', " +
                 "totalTimePast= '" + totalTimePast + "', " +
                 "totalTimeComming= '" + totalTimeComming + "' WHERE " +

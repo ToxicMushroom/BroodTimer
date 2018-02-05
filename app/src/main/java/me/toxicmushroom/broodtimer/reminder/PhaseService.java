@@ -44,6 +44,21 @@ public class PhaseService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Toast.makeText(this, "Service started.", Toast.LENGTH_LONG).show();
+        dbHandler = new MyDBHandler(this, null, null, 0);
+        brood = new Broden(intent.getStringExtra("broodnaam"));
+        brood.setFases(
+                intent.getIntExtra("fase1", dbHandler.getLatestBrood().getFase1()),
+                intent.getIntExtra("fase2", dbHandler.getLatestBrood().getFase2()),
+                intent.getIntExtra("fase3", dbHandler.getLatestBrood().getFase3()),
+                intent.getIntExtra("fase4", dbHandler.getLatestBrood().getFase4()),
+                intent.getIntExtra("fase5", dbHandler.getLatestBrood().getFase5()),
+                intent.getIntExtra("fase6", dbHandler.getLatestBrood().getFase6()),
+                intent.getIntExtra("fase7", dbHandler.getLatestBrood().getFase7()),
+                intent.getIntExtra("fase8", dbHandler.getLatestBrood().getFase8()),
+                intent.getIntExtra("fase9", dbHandler.getLatestBrood().getFase9()),
+                intent.getIntExtra("fase10", dbHandler.getLatestBrood().getFase10())
+        );
+
         timer();
         return START_STICKY;
     }

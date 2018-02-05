@@ -1,5 +1,6 @@
 package me.toxicmushroom.broodtimer;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -26,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView broodListView;
     BroodAdapter broodAdapter;
     Toolbar toolbar;
-    ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,10 +50,14 @@ public class MainActivity extends AppCompatActivity {
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), AddBroodActivity.class)));
+        updater(broodAdapter, this);
 
-        Runnable runnable = () -> {
-            broodAdapter.notifyDataSetChanged();
-        };
+
+    }
+
+    private ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+    public void updater(BroodAdapter broodAdapter, Activity activity) {
+        Runnable runnable = () -> activity.runOnUiThread(broodAdapter::notifyDataSetChanged);
         executorService.scheduleAtFixedRate(runnable, 1, 500, TimeUnit.MILLISECONDS);
     }
 

@@ -3,6 +3,7 @@ package me.toxicmushroom.broodtimer;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -99,6 +100,17 @@ public class AddBroodActivity extends AppCompatActivity implements InputDialog.I
                 );
                 dbHandler.addBrood(broodje);
                 Intent intent = new Intent(this, PhaseService.class);
+                intent.putExtra("broodnaam", broodje.get_broodnaam());
+                intent.putExtra("fase1", broodje.getFase1());
+                intent.putExtra("fase2", broodje.getFase2());
+                intent.putExtra("fase3", broodje.getFase3());
+                intent.putExtra("fase4", broodje.getFase4());
+                intent.putExtra("fase5", broodje.getFase5());
+                intent.putExtra("fase6", broodje.getFase6());
+                intent.putExtra("fase7", broodje.getFase7());
+                intent.putExtra("fase8", broodje.getFase8());
+                intent.putExtra("fase9", broodje.getFase9());
+                intent.putExtra("fase10", broodje.getFase10());
                 startService(intent);
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
             } else {
