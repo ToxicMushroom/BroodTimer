@@ -111,6 +111,7 @@ public class AddBroodActivity extends AppCompatActivity implements InputDialog.I
                 intent.putExtra("fase8", broodje.getFase8());
                 intent.putExtra("fase9", broodje.getFase9());
                 intent.putExtra("fase10", broodje.getFase10());
+
                 startService(intent);
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
             } else {

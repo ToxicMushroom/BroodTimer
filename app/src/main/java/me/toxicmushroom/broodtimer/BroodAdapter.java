@@ -1,9 +1,7 @@
 package me.toxicmushroom.broodtimer;
 
 import android.annotation.SuppressLint;
-import android.content.ContentValues;
 import android.content.Context;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -22,7 +20,7 @@ import me.toxicmushroom.broodtimer.data.MyDBHandler;
  * Created by Merlijn on 4/02/2018.
  */
 
-public class BroodAdapter extends RecyclerView.Adapter<BroodAdapter.BroodViewHolder> {
+public class BroodAdapter extends RecyclerView.Adapter<BroodAdapter.BroodViewHolder> implements InputDialog.InputDialogListener{
 
     Context context;
     List<Broden> brodenList;
@@ -51,6 +49,7 @@ public class BroodAdapter extends RecyclerView.Adapter<BroodAdapter.BroodViewHol
     @Override
     public BroodAdapter.BroodViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
+
         View view = inflater.inflate(R.layout.brood_items, parent, false);
         BroodViewHolder broodViewHolder = new BroodViewHolder(view);
         return broodViewHolder;
@@ -60,6 +59,9 @@ public class BroodAdapter extends RecyclerView.Adapter<BroodAdapter.BroodViewHol
     @Override
     public void onBindViewHolder(BroodAdapter.BroodViewHolder holder, int position) {
         Broden brood = brodenList.get(position);
+        holder.itemView.setOnClickListener(v -> {
+            //option menu here
+        });
         holder.icon.setImageDrawable(placeHolder);
         holder.title.setText(brood.get_broodnaam());
         holder.currentPhase.setText(myDBHandler.getData("brodenVooruitgang", "currentPhaseTime", brood.get_broodnaam()) + " seconden voorbij.");
@@ -70,6 +72,11 @@ public class BroodAdapter extends RecyclerView.Adapter<BroodAdapter.BroodViewHol
     @Override
     public int getItemCount() {
         return brodenList.size();
+    }
+
+    @Override
+    public void applyText(String input) {
+
     }
 
     public class BroodViewHolder extends RecyclerView.ViewHolder {

@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
     BroodAdapter broodAdapter;
     Toolbar toolbar;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,15 +50,15 @@ public class MainActivity extends AppCompatActivity {
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), AddBroodActivity.class)));
         updater(broodAdapter, this);
-
-
     }
 
     private ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+
     public void updater(BroodAdapter broodAdapter, Activity activity) {
         Runnable runnable = () -> activity.runOnUiThread(broodAdapter::notifyDataSetChanged);
         executorService.scheduleAtFixedRate(runnable, 1, 500, TimeUnit.MILLISECONDS);
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -83,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.action_reset) {
             for (Broden brood : myDBHandler.getAlleBroden()) {
                 myDBHandler.deleteBrood(brood.get_broodnaam());
-                stopService(new Intent(getApplicationContext(), PhaseService.class));
+                PhaseService.toStop.add(brood);
             }
         }
 

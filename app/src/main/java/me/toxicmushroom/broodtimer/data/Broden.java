@@ -6,6 +6,7 @@ package me.toxicmushroom.broodtimer.data;
 
 public class Broden {
 
+
     public Broden() {/*empty*/}
 
     public Broden(String broodnaam) {
