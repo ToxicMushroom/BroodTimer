@@ -24,8 +24,9 @@ import me.toxicmushroom.broodtimer.reminder.PhaseService;
 
 public class AddBroodActivity extends AppCompatActivity implements InputDialog.InputDialogListener {
 
-    public static int editing = 0;
 
+
+    public static int editing = 0;
     TextView one;
     TextView two;
     TextView three;

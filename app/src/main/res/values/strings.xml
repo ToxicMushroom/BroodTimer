@@ -23,4 +23,7 @@
     <string name="PhaseTenTitle">bakken in oven</string>
     <string name="PhaseTenDefault">35</string>
     <string name="action_reset">Reset</string>
+    <string name="pause">pause</string>
+    <string name="resume">resume</string>
+    <string name="stop">stop</string>
 </resources>

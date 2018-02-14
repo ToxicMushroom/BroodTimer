@@ -8,13 +8,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import me.toxicmushroom.broodtimer.data.Broden;
 import me.toxicmushroom.broodtimer.data.MyDBHandler;
+import me.toxicmushroom.broodtimer.reminder.PhaseService;
 
 /**
  * Created by Merlijn on 4/02/2018.
@@ -59,8 +62,26 @@ public class BroodAdapter extends RecyclerView.Adapter<BroodAdapter.BroodViewHol
     @Override
     public void onBindViewHolder(BroodAdapter.BroodViewHolder holder, int position) {
         Broden brood = brodenList.get(position);
-        holder.itemView.setOnClickListener(v -> {
-            //option menu here
+        holder.itemView.setOnClickListener((v) -> {
+            PopupMenu popupMenu = new PopupMenu(context, holder.title);
+            popupMenu.inflate(R.menu.brood_menu);
+            popupMenu.setOnMenuItemClickListener((i) -> {
+                int id = i.getItemId();
+                switch (id) {
+                    case R.id.action_pause:
+                        PhaseService.paused.add(brood.get_broodnaam());
+                        break;
+                    case R.id.action_resume:
+                        PhaseService.paused.remove(brood.get_broodnaam());
+                        break;
+                    case R.id.action_stop:
+                        PhaseService.toStop.remove(brood.get_broodnaam());
+                        break;
+                }
+                return true;
+            });
+            popupMenu.show();
+
         });
         holder.icon.setImageDrawable(placeHolder);
         holder.title.setText(brood.get_broodnaam());

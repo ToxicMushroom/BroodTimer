@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -82,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.action_reset) {
             for (Broden brood : myDBHandler.getAlleBroden()) {
                 myDBHandler.deleteBrood(brood.get_broodnaam());
-                PhaseService.toStop.add(brood);
+                PhaseService.toStop.add(brood.get_broodnaam());
             }
         }
 

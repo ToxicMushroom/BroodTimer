@@ -15,7 +15,7 @@ import me.toxicmushroom.broodtimer.reminder.PhaseService;
 
 public class MyDBHandler extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 16;
+    private static final int DATABASE_VERSION = 17;
     private static final String DATABASE_NAME = "broden.db";
     public static final String TABLE_BRODEN = "broden";
     public static final String COLUMN_BROODNAAM = "broodnaam";
@@ -77,82 +77,80 @@ public class MyDBHandler extends SQLiteOpenHelper {
     //voeg een nieuwe rij toe aan de database
     public void addBrood(Broden brood) {
         SQLiteDatabase db = getWritableDatabase();
-        if (db != null) {
-            db.execSQL("DROP TABLE IF EXISTS latestBrood");
-            db.execSQL("CREATE TABLE IF NOT EXISTS latestBrood" + " (" +
-                    COLUMN_BROODNAAM + " TEXT, " +
-                    COLUMN_FASE1 + " TEXT, " +
-                    COLUMN_FASE2 + " TEXT, " +
-                    COLUMN_FASE3 + " TEXT, " +
-                    COLUMN_FASE4 + " TEXT, " +
-                    COLUMN_FASE5 + " TEXT, " +
-                    COLUMN_FASE6 + " TEXT, " +
-                    COLUMN_FASE7 + " TEXT, " +
-                    COLUMN_FASE8 + " TEXT, " +
-                    COLUMN_FASE9 + " TEXT, " +
-                    COLUMN_FASE10 + " TEXT " +
-                    ");");
-            db.execSQL("INSERT INTO latestBrood (" +
-                    COLUMN_BROODNAAM + ", " +
-                    COLUMN_FASE1 + ", " +
-                    COLUMN_FASE2 + ", " +
-                    COLUMN_FASE3 + ", " +
-                    COLUMN_FASE4 + ", " +
-                    COLUMN_FASE5 + ", " +
-                    COLUMN_FASE6 + ", " +
-                    COLUMN_FASE7 + ", " +
-                    COLUMN_FASE8 + ", " +
-                    COLUMN_FASE9 + ", " +
-                    COLUMN_FASE10 +
-                    ") VALUES ('" +
-                    brood.get_broodnaam() + "', '" +
-                    brood.getFase1() + "', '" +
-                    brood.getFase2() + "', '" +
-                    brood.getFase3() + "', '" +
-                    brood.getFase4() + "', '" +
-                    brood.getFase5() + "', '" +
-                    brood.getFase6() + "', '" +
-                    brood.getFase7() + "', '" +
-                    brood.getFase8() + "', '" +
-                    brood.getFase9() + "', '" +
-                    brood.getFase10() +
-                    "');");
-            db.execSQL("INSERT INTO brodenVooruitgang (" +
-                    COLUMN_BROODNAAM + ", currentPhase, nextPhase, currentPhaseTime, untilPhaseTime, totalTimePast, totalTimeComming) VALUES ('" +
-                    brood.get_broodnaam() + "', '" +
-                    0 + "', '" +
-                    1 + "', '" +
-                    0 + "', '" +
-                    brood.getFase1() + "', '" +
-                    0 + "', '" +
-                    (brood.getAllFases()) + "');");
-            db.execSQL("INSERT INTO " + TABLE_BRODEN + " (" +
-                    COLUMN_BROODNAAM + ", " +
-                    COLUMN_FASE1 + ", " +
-                    COLUMN_FASE2 + ", " +
-                    COLUMN_FASE3 + ", " +
-                    COLUMN_FASE4 + ", " +
-                    COLUMN_FASE5 + ", " +
-                    COLUMN_FASE6 + ", " +
-                    COLUMN_FASE7 + ", " +
-                    COLUMN_FASE8 + ", " +
-                    COLUMN_FASE9 + ", " +
-                    COLUMN_FASE10 +
-                    ") VALUES ('" +
-                    brood.get_broodnaam() + "', '" +
-                    brood.getFase1() + "', '" +
-                    brood.getFase2() + "', '" +
-                    brood.getFase3() + "', '" +
-                    brood.getFase4() + "', '" +
-                    brood.getFase5() + "', '" +
-                    brood.getFase6() + "', '" +
-                    brood.getFase7() + "', '" +
-                    brood.getFase8() + "', '" +
-                    brood.getFase9() + "', '" +
-                    brood.getFase10() +
-                    "');");
-            db.close();
-        }
+        db.execSQL("DROP TABLE IF EXISTS latestBrood");
+        db.execSQL("CREATE TABLE IF NOT EXISTS latestBrood" + " (" +
+                COLUMN_BROODNAAM + " TEXT, " +
+                COLUMN_FASE1 + " TEXT, " +
+                COLUMN_FASE2 + " TEXT, " +
+                COLUMN_FASE3 + " TEXT, " +
+                COLUMN_FASE4 + " TEXT, " +
+                COLUMN_FASE5 + " TEXT, " +
+                COLUMN_FASE6 + " TEXT, " +
+                COLUMN_FASE7 + " TEXT, " +
+                COLUMN_FASE8 + " TEXT, " +
+                COLUMN_FASE9 + " TEXT, " +
+                COLUMN_FASE10 + " TEXT " +
+                ");");
+        db.execSQL("INSERT INTO latestBrood (" +
+                COLUMN_BROODNAAM + ", " +
+                COLUMN_FASE1 + ", " +
+                COLUMN_FASE2 + ", " +
+                COLUMN_FASE3 + ", " +
+                COLUMN_FASE4 + ", " +
+                COLUMN_FASE5 + ", " +
+                COLUMN_FASE6 + ", " +
+                COLUMN_FASE7 + ", " +
+                COLUMN_FASE8 + ", " +
+                COLUMN_FASE9 + ", " +
+                COLUMN_FASE10 +
+                ") VALUES ('" +
+                brood.get_broodnaam() + "', '" +
+                brood.getFase1() + "', '" +
+                brood.getFase2() + "', '" +
+                brood.getFase3() + "', '" +
+                brood.getFase4() + "', '" +
+                brood.getFase5() + "', '" +
+                brood.getFase6() + "', '" +
+                brood.getFase7() + "', '" +
+                brood.getFase8() + "', '" +
+                brood.getFase9() + "', '" +
+                brood.getFase10() +
+                "');");
+        db.execSQL("INSERT INTO brodenVooruitgang (" +
+                COLUMN_BROODNAAM + ", currentPhase, nextPhase, currentPhaseTime, untilPhaseTime, totalTimePast, totalTimeComming) VALUES ('" +
+                brood.get_broodnaam() + "', '" +
+                0 + "', '" +
+                1 + "', '" +
+                0 + "', '" +
+                brood.getFase1() * 60 + "', '" +
+                0 + "', '" +
+                (brood.getAllFases() * 60) + "');");
+        db.execSQL("INSERT INTO " + TABLE_BRODEN + " (" +
+                COLUMN_BROODNAAM + ", " +
+                COLUMN_FASE1 + ", " +
+                COLUMN_FASE2 + ", " +
+                COLUMN_FASE3 + ", " +
+                COLUMN_FASE4 + ", " +
+                COLUMN_FASE5 + ", " +
+                COLUMN_FASE6 + ", " +
+                COLUMN_FASE7 + ", " +
+                COLUMN_FASE8 + ", " +
+                COLUMN_FASE9 + ", " +
+                COLUMN_FASE10 +
+                ") VALUES ('" +
+                brood.get_broodnaam() + "', '" +
+                brood.getFase1() + "', '" +
+                brood.getFase2() + "', '" +
+                brood.getFase3() + "', '" +
+                brood.getFase4() + "', '" +
+                brood.getFase5() + "', '" +
+                brood.getFase6() + "', '" +
+                brood.getFase7() + "', '" +
+                brood.getFase8() + "', '" +
+                brood.getFase9() + "', '" +
+                brood.getFase10() +
+                "');");
+        db.close();
     }
 
     //delete een rij van de database
