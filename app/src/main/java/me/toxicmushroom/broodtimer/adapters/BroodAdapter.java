@@ -1,7 +1,8 @@
-package me.toxicmushroom.broodtimer;
+package me.toxicmushroom.broodtimer.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,6 +16,9 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.toxicmushroom.broodtimer.InputDialog;
+import me.toxicmushroom.broodtimer.R;
+import me.toxicmushroom.broodtimer.activities.EditBroodActivity;
 import me.toxicmushroom.broodtimer.data.Broden;
 import me.toxicmushroom.broodtimer.data.MyDBHandler;
 import me.toxicmushroom.broodtimer.reminder.PhaseService;
@@ -23,16 +27,16 @@ import me.toxicmushroom.broodtimer.reminder.PhaseService;
  * Created by Merlijn on 4/02/2018.
  */
 
-public class BroodAdapter extends RecyclerView.Adapter<BroodAdapter.BroodViewHolder> implements InputDialog.InputDialogListener{
+public class BroodAdapter extends RecyclerView.Adapter<BroodAdapter.BroodViewHolder> implements InputDialog.InputDialogListener {
 
-    Context context;
-    List<Broden> brodenList;
-    Drawable placeHolder;
-    MyDBHandler myDBHandler;
+    private Context context;
+    private List<Broden> brodenList;
+    private Drawable placeHolder;
+    private MyDBHandler myDBHandler;
 
     public BroodAdapter(Context context, List<Broden> broden) {
         brodenList = new ArrayList<>();
-        brodenList.addAll(broden);
+        setItems(broden);
         this.context = context;
         myDBHandler = new MyDBHandler(context, null, null, 0);
         placeHolder = context.getResources().getDrawable(R.drawable.ic_pause_black_24dp);
@@ -52,10 +56,8 @@ public class BroodAdapter extends RecyclerView.Adapter<BroodAdapter.BroodViewHol
     @Override
     public BroodAdapter.BroodViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-
         View view = inflater.inflate(R.layout.brood_items, parent, false);
-        BroodViewHolder broodViewHolder = new BroodViewHolder(view);
-        return broodViewHolder;
+        return new BroodViewHolder(view);
     }
 
     @SuppressLint("SetTextI18n")
@@ -68,26 +70,37 @@ public class BroodAdapter extends RecyclerView.Adapter<BroodAdapter.BroodViewHol
             popupMenu.setOnMenuItemClickListener((i) -> {
                 int id = i.getItemId();
                 switch (id) {
-                    case R.id.action_pause:
+                    case R.id.action_edit:
+                        EditBroodActivity.brood = brood;
+                        if (myDBHandler.getData(MyDBHandler.TABLE_BRODEN, "loaded", brood.get_broodnaam()).equalsIgnoreCase("0"))
+                            context.startActivity(new Intent(context.getApplicationContext(), EditBroodActivity.class));
+                        else
+                            Toast.makeText(context.getApplicationContext(), "Je kan geen geladen broden bewerken!", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.action_load:
+                        myDBHandler.setLoadedState(brood.get_broodnaam(), true);
+                        Intent intent = new Intent(context.getApplicationContext(), PhaseService.class);
+                        intent.putExtra("broodnaam", brood.get_broodnaam());
+                        intent.putExtra("fase1", brood.getFase1());
+                        intent.putExtra("fase2", brood.getFase2());
+                        intent.putExtra("fase3", brood.getFase3());
+                        intent.putExtra("fase4", brood.getFase4());
+                        intent.putExtra("fase5", brood.getFase5());
+                        intent.putExtra("fase6", brood.getFase6());
+                        intent.putExtra("fase7", brood.getFase7());
+                        intent.putExtra("fase8", brood.getFase8());
+                        intent.putExtra("fase9", brood.getFase9());
+                        intent.putExtra("fase10", brood.getFase10());
+                        context.startService(intent);
                         PhaseService.paused.add(brood.get_broodnaam());
-                        break;
-                    case R.id.action_resume:
-                        PhaseService.paused.remove(brood.get_broodnaam());
-                        break;
-                    case R.id.action_stop:
-                        PhaseService.toStop.remove(brood.get_broodnaam());
                         break;
                 }
                 return true;
             });
             popupMenu.show();
-
         });
         holder.icon.setImageDrawable(placeHolder);
         holder.title.setText(brood.get_broodnaam());
-        holder.currentPhase.setText(myDBHandler.getData("brodenVooruitgang", "currentPhaseTime", brood.get_broodnaam()) + " seconden voorbij.");
-        holder.nextPhase.setText("Nog " + myDBHandler.getData("brodenVooruitgang", "untilPhaseTime", brood.get_broodnaam()) + " seconden tot fase" +
-                myDBHandler.getData("brodenVooruitgang", "nextPhase", brood.get_broodnaam()));
     }
 
     @Override
@@ -104,16 +117,11 @@ public class BroodAdapter extends RecyclerView.Adapter<BroodAdapter.BroodViewHol
 
         ImageView icon;
         TextView title;
-        TextView currentPhase;
-        TextView nextPhase;
 
         public BroodViewHolder(View itemView) {
             super(itemView);
             icon = itemView.findViewById(R.id.thumbnail_image);
             title = itemView.findViewById(R.id.recycle_title);
-            currentPhase = itemView.findViewById(R.id.recycle_brood_phase_now);
-            nextPhase = itemView.findViewById(R.id.recycle_brood_phase_incomming);
-
         }
     }
 }

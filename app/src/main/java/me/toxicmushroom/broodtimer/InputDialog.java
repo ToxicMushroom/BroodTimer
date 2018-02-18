@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 
+import me.toxicmushroom.broodtimer.activities.AddBroodActivity;
+
 /**
  * Created by Merlijn on 27/12/2017.
  */

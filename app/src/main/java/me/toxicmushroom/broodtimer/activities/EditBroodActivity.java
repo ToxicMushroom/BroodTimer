@@ -1,31 +1,30 @@
-package me.toxicmushroom.broodtimer;
+package me.toxicmushroom.broodtimer.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Arrays;
 import java.util.Collection;
 
+import me.toxicmushroom.broodtimer.InputDialog;
+import me.toxicmushroom.broodtimer.MainActivity;
+import me.toxicmushroom.broodtimer.R;
 import me.toxicmushroom.broodtimer.data.Broden;
 import me.toxicmushroom.broodtimer.data.MyDBHandler;
-import me.toxicmushroom.broodtimer.reminder.PhaseService;
 
 /**
- * Created by Merlijn on 27/12/2017.
+ * Created by Merlijn on 17/02/2018.
  */
 
-public class AddBroodActivity extends AppCompatActivity implements InputDialog.InputDialogListener {
+public class EditBroodActivity extends AppCompatActivity implements InputDialog.InputDialogListener {
 
-
-
+    public static Broden brood = null;
     public static int editing = 0;
     TextView one;
     TextView two;
@@ -43,7 +42,7 @@ public class AddBroodActivity extends AppCompatActivity implements InputDialog.I
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_brood);
+        setContentView(R.layout.activity_edit_brood);
         dbHandler = new MyDBHandler(this, null, null, 0); //deze params worden door de class gedaan
         broodNaamEditor = findViewById(R.id.reminder_title);
         one = findViewById(R.id.tvSettingsPhaseOne);
@@ -56,22 +55,19 @@ public class AddBroodActivity extends AppCompatActivity implements InputDialog.I
         eight = findViewById(R.id.tvSettingsPhaseEight);
         nine = findViewById(R.id.tvSettingsPhaseNine);
         ten = findViewById(R.id.tvSettingsPhaseTen);
-        Broden initBrood = dbHandler.getLatestBrood();
-        if (initBrood != null) {
-            broodNaamEditor.setText(initBrood.get_broodnaam());
-            one.setText(String.valueOf(initBrood.getFase1()));
-            two.setText(String.valueOf(initBrood.getFase2()));
-            three.setText(String.valueOf(initBrood.getFase3()));
-            four.setText(String.valueOf(initBrood.getFase4()));
-            five.setText(String.valueOf(initBrood.getFase5()));
-            six.setText(String.valueOf(initBrood.getFase6()));
-            seven.setText(String.valueOf(initBrood.getFase7()));
-            eight.setText(String.valueOf(initBrood.getFase8()));
-            nine.setText(String.valueOf(initBrood.getFase9()));
-            ten.setText(String.valueOf(initBrood.getFase10()));
-        }
-        Button btnCreate = findViewById(R.id.btnCreate);
-        btnCreate.setOnClickListener(v -> {
+        broodNaamEditor.setText(brood.get_broodnaam());
+        one.setText(String.valueOf(brood.getFase1()));
+        two.setText(String.valueOf(brood.getFase2()));
+        three.setText(String.valueOf(brood.getFase3()));
+        four.setText(String.valueOf(brood.getFase4()));
+        five.setText(String.valueOf(brood.getFase5()));
+        six.setText(String.valueOf(brood.getFase6()));
+        seven.setText(String.valueOf(brood.getFase7()));
+        eight.setText(String.valueOf(brood.getFase8()));
+        nine.setText(String.valueOf(brood.getFase9()));
+        ten.setText(String.valueOf(brood.getFase10()));
+        Button btnSave = findViewById(R.id.btnSave);
+        btnSave.setOnClickListener((v) -> {
             boolean accept = true;
             Collection<TextView> tvList = Arrays.asList(one, two, three, four, five, six, seven, eight, nine, ten);
             for (TextView view : tvList) {
@@ -79,9 +75,8 @@ public class AddBroodActivity extends AppCompatActivity implements InputDialog.I
             }
             if (accept && !broodNaamEditor.getText().toString().equalsIgnoreCase("")) {
                 for (Broden broodje : dbHandler.getAlleBroden()) {
-                    if (broodje.get_broodnaam().equalsIgnoreCase(broodNaamEditor.getText().toString())) {
-                        Toast toast = Toast.makeText(getApplicationContext(), "De broodnaam: '" + broodNaamEditor.getText().toString() + "' is al in gebruik.", Toast.LENGTH_LONG);
-                        toast.show();
+                    if (broodje.get_broodnaam().equalsIgnoreCase(broodNaamEditor.getText().toString()) && !brood.get_broodnaam().equalsIgnoreCase(broodje.get_broodnaam())) {
+                        Toast.makeText(getApplicationContext(), "De broodnaam: '" + broodNaamEditor.getText().toString() + "' is al in gebruik.", Toast.LENGTH_LONG).show();
                         return;
                     }
                 }
@@ -99,27 +94,18 @@ public class AddBroodActivity extends AppCompatActivity implements InputDialog.I
                         Integer.valueOf(nine.getText().toString()),
                         Integer.valueOf(ten.getText().toString())
                 );
-                dbHandler.addBrood(broodje);
-                Intent intent = new Intent(this, PhaseService.class);
-                intent.putExtra("broodnaam", broodje.get_broodnaam());
-                intent.putExtra("fase1", broodje.getFase1());
-                intent.putExtra("fase2", broodje.getFase2());
-                intent.putExtra("fase3", broodje.getFase3());
-                intent.putExtra("fase4", broodje.getFase4());
-                intent.putExtra("fase5", broodje.getFase5());
-                intent.putExtra("fase6", broodje.getFase6());
-                intent.putExtra("fase7", broodje.getFase7());
-                intent.putExtra("fase8", broodje.getFase8());
-                intent.putExtra("fase9", broodje.getFase9());
-                intent.putExtra("fase10", broodje.getFase10());
-
-                startService(intent);
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                dbHandler.updateBrood(brood.get_broodnaam(), broodje);
+                startActivity(new Intent(getApplicationContext(), LoadBroodActivity.class));
             } else {
-                Toast toast = Toast.makeText(getApplicationContext(), "Je hebt niet alle waardes ingevuld!", Toast.LENGTH_SHORT);
-                toast.show();
+                Toast.makeText(getApplicationContext(), "Je hebt niet alle waardes ingevuld!", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(getApplicationContext(), LoadBroodActivity.class));
     }
 
     public void openDialog() {

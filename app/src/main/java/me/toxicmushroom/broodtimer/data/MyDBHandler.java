@@ -4,7 +4,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteStatement;
 
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 
 import me.toxicmushroom.broodtimer.reminder.PhaseService;
@@ -15,7 +17,7 @@ import me.toxicmushroom.broodtimer.reminder.PhaseService;
 
 public class MyDBHandler extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 17;
+    private static final int DATABASE_VERSION = 18;
     private static final String DATABASE_NAME = "broden.db";
     public static final String TABLE_BRODEN = "broden";
     public static final String COLUMN_BROODNAAM = "broodnaam";
@@ -29,6 +31,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
     public static final String COLUMN_FASE8 = "fase8";
     public static final String COLUMN_FASE9 = "fase9";
     public static final String COLUMN_FASE10 = "fase10";
+    public static final String COLUMN_LOADED = "loaded";
 
 
     public MyDBHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
@@ -48,7 +51,8 @@ public class MyDBHandler extends SQLiteOpenHelper {
                 COLUMN_FASE7 + " TEXT, " +
                 COLUMN_FASE8 + " TEXT, " +
                 COLUMN_FASE9 + " TEXT, " +
-                COLUMN_FASE10 + " TEXT " +
+                COLUMN_FASE10 + " TEXT, " +
+                COLUMN_LOADED + " INTEGER" +
                 ");");
         db.execSQL("CREATE TABLE IF NOT EXISTS brodenVooruitgang (" +
                 COLUMN_BROODNAAM + " TEXT, currentPhase TEXT, nextPhase TEXT, currentPhaseTime TEXT, untilPhaseTime TEXT, totalTimePast TEXT, totalTimeComming TEXT);");
@@ -136,7 +140,8 @@ public class MyDBHandler extends SQLiteOpenHelper {
                 COLUMN_FASE7 + ", " +
                 COLUMN_FASE8 + ", " +
                 COLUMN_FASE9 + ", " +
-                COLUMN_FASE10 +
+                COLUMN_FASE10 + ", " +
+                COLUMN_LOADED +
                 ") VALUES ('" +
                 brood.get_broodnaam() + "', '" +
                 brood.getFase1() + "', '" +
@@ -148,8 +153,8 @@ public class MyDBHandler extends SQLiteOpenHelper {
                 brood.getFase7() + "', '" +
                 brood.getFase8() + "', '" +
                 brood.getFase9() + "', '" +
-                brood.getFase10() +
-                "');");
+                brood.getFase10() + "', '" +
+                0 + "');");
         db.close();
     }
 
@@ -276,5 +281,76 @@ public class MyDBHandler extends SQLiteOpenHelper {
         c.close();
         db.close();
         return broden;
+    }
+
+    public ArrayList<Broden> getLoadedBroden() {
+        SQLiteDatabase db = getWritableDatabase();
+        ArrayList<Broden> broden = new ArrayList<>();
+        Broden brood;
+        Cursor c = db.rawQuery("SELECT * FROM " + TABLE_BRODEN + " WHERE " + COLUMN_LOADED + "= '1'", null);
+        c.moveToFirst();
+        while (c.moveToNext()) {
+            if (!c.isAfterLast()) {
+                brood = new Broden();
+                brood.set_broodnaam(c.getString(c.getColumnIndex(COLUMN_BROODNAAM)));
+                brood.setFases(
+                        c.getInt(c.getColumnIndex(COLUMN_FASE1)),
+                        c.getInt(c.getColumnIndex(COLUMN_FASE2)),
+                        c.getInt(c.getColumnIndex(COLUMN_FASE3)),
+                        c.getInt(c.getColumnIndex(COLUMN_FASE4)),
+                        c.getInt(c.getColumnIndex(COLUMN_FASE5)),
+                        c.getInt(c.getColumnIndex(COLUMN_FASE6)),
+                        c.getInt(c.getColumnIndex(COLUMN_FASE7)),
+                        c.getInt(c.getColumnIndex(COLUMN_FASE8)),
+                        c.getInt(c.getColumnIndex(COLUMN_FASE9)),
+                        c.getInt(c.getColumnIndex(COLUMN_FASE10)));
+                broden.add(brood);
+            }
+        }
+        c.close();
+        db.close();
+        return broden;
+    }
+
+    public void setLoadedState(String broodNaam, boolean loaded) {
+        SQLiteDatabase db = getWritableDatabase();
+        final int i = loaded ? 1 : 0;
+        String sql = "UPDATE " + TABLE_BRODEN + " SET " + COLUMN_LOADED + "= ? WHERE " + COLUMN_BROODNAAM + "= ?" ;
+        SQLiteStatement statement = db.compileStatement(sql);
+        statement.bindLong(1, i);
+        statement.bindString(2, broodNaam);
+        statement.execute();
+        db.close();
+    }
+
+    public void updateBrood(String broodNaam, Broden broodje) {
+        SQLiteDatabase db = getWritableDatabase();
+        String sql = "UPDATE " + TABLE_BRODEN + " SET " +
+                COLUMN_BROODNAAM + "=?, " +
+                COLUMN_FASE1 + "=?, " +
+                COLUMN_FASE2 + "=?, " +
+                COLUMN_FASE3 + "=?, " +
+                COLUMN_FASE4 + "=?, " +
+                COLUMN_FASE5 + "=?, " +
+                COLUMN_FASE6 + "=?, " +
+                COLUMN_FASE7 + "=?, " +
+                COLUMN_FASE8 + "=?, " +
+                COLUMN_FASE9 + "=?, " +
+                COLUMN_FASE10 + "=? " +
+                "WHERE " + COLUMN_BROODNAAM + "=?";
+        SQLiteStatement statement = db.compileStatement(sql);
+        statement.bindString(1, broodje.get_broodnaam());
+        statement.bindLong(2, broodje.getFase1());
+        statement.bindLong(3, broodje.getFase2());
+        statement.bindLong(4, broodje.getFase3());
+        statement.bindLong(5, broodje.getFase4());
+        statement.bindLong(6, broodje.getFase5());
+        statement.bindLong(7, broodje.getFase6());
+        statement.bindLong(8, broodje.getFase7());
+        statement.bindLong(9, broodje.getFase8());
+        statement.bindLong(10, broodje.getFase9());
+        statement.bindLong(11, broodje.getFase10());
+        statement.bindString(12, broodNaam);
+        statement.execute();
     }
 }

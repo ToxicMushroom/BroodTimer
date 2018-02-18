@@ -20,7 +20,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="AddBroodActivity"
+            android:name=".activities.AddBroodActivity"
+            android:label="BroodMaker"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.LoadBroodActivity"
+            android:label="BroodMaker"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.EditBroodActivity"
             android:label="BroodMaker"
             android:theme="@style/AppTheme.NoActionBar" />
 

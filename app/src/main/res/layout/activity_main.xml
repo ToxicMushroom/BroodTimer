@@ -17,27 +17,57 @@
         app:popupTheme="@style/Theme.AppCompat.Light"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/toolbar"
+        android:text="Loaded Broden"
+        android:textColor="@android:color/white"
+        android:textAlignment="center"
+        android:textSize="20dp"
+        android:id="@+id/textView" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar" />
-
-    <RelativeLayout
-        android:id="@+id/empty_view"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true">
-    </RelativeLayout>
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab2"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_alignLeft="@+id/fab"
+        android:layout_alignStart="@+id/fab"
+        android:layout_alignTop="@+id/fab"
+        app:backgroundTint="@android:color/holo_blue_dark"
+        app:srcCompat="@drawable/ic_create_new_folder_white_24dp"
+        tools:ignore="VectorDrawableCompat" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab1"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_alignLeft="@+id/fab"
+        android:layout_alignStart="@+id/fab"
+        android:layout_alignTop="@+id/fab"
+        app:backgroundTint="@android:color/holo_blue_dark"
+        app:srcCompat="@drawable/ic_folder_open_white_24dp"
+        tools:ignore="VectorDrawableCompat" />
+
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_margin="16dp"
+        android:layout_margin="21dp"
         app:backgroundTint="@color/colorPrimary"
         app:fab_size="normal"
         app:srcCompat="@drawable/ic_add_white_24dp"

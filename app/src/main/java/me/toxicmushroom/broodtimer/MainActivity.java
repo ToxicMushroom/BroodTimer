@@ -11,12 +11,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import me.toxicmushroom.broodtimer.activities.AddBroodActivity;
+import me.toxicmushroom.broodtimer.activities.LoadBroodActivity;
+import me.toxicmushroom.broodtimer.adapters.LoadedBroodAdapter;
 import me.toxicmushroom.broodtimer.data.Broden;
 import me.toxicmushroom.broodtimer.data.MyDBHandler;
 import me.toxicmushroom.broodtimer.reminder.PhaseService;
@@ -24,10 +26,11 @@ import me.toxicmushroom.broodtimer.reminder.PhaseService;
 public class MainActivity extends AppCompatActivity {
 
     MyDBHandler myDBHandler;
-    View emptyView;
     RecyclerView broodListView;
-    BroodAdapter broodAdapter;
+    LoadedBroodAdapter loadedBroodAdapter;
     Toolbar toolbar;
+    FloatingActionButton fab, fab1, fab2;
+    boolean isFABOpen = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,28 +38,49 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //Start Typing under this
         myDBHandler = new MyDBHandler(this, null, null, 0);
-        emptyView = findViewById(R.id.empty_view);
         toolbar = findViewById(R.id.toolbar);//Dat blauwe ding dat je altijd ziet
         setSupportActionBar(toolbar);
-        toolbar.setTitle("BroodSchedulder");
-
+        toolbar.setTitle("BroodScheduler");
+        fab = findViewById(R.id.fab);
+        fab1 = findViewById(R.id.fab1);
+        fab2 = findViewById(R.id.fab2);
 
         //Broden lijst gedoe
         broodListView = findViewById(R.id.list);
         broodListView.setLayoutManager(new LinearLayoutManager(this));
-        broodAdapter = new BroodAdapter(this, myDBHandler.getAlleBroden());
-        broodListView.setAdapter(broodAdapter);
-        broodAdapter.setItems(myDBHandler.getAlleBroden());
+        loadedBroodAdapter = new LoadedBroodAdapter(this, myDBHandler.getLoadedBroden());
+        broodListView.setAdapter(loadedBroodAdapter);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), AddBroodActivity.class)));
-        updater(broodAdapter, this);
+
+        fab.setOnClickListener((v) -> {
+            if (!isFABOpen) {
+                showFABMenu();
+            } else {
+                closeFABMenu();
+            }
+        });
+
+        fab1.setOnClickListener((v) -> startActivity(new Intent(getApplicationContext(), LoadBroodActivity.class)));
+        fab2.setOnClickListener((v) -> startActivity(new Intent(getApplicationContext(), AddBroodActivity.class)));
+        updater(loadedBroodAdapter, this);
+    }
+
+    private void showFABMenu() {
+        isFABOpen = true;
+        fab1.animate().translationY(-getResources().getDimension(R.dimen.standard_55));
+        fab2.animate().translationY(-getResources().getDimension(R.dimen.standard_105));
+    }
+
+    private void closeFABMenu() {
+        isFABOpen = false;
+        fab1.animate().translationY(0);
+        fab2.animate().translationY(0);
     }
 
     private ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
 
-    public void updater(BroodAdapter broodAdapter, Activity activity) {
-        Runnable runnable = () -> activity.runOnUiThread(broodAdapter::notifyDataSetChanged);
+    public void updater(LoadedBroodAdapter loadedBroodAdapter, Activity activity) {
+        Runnable runnable = () -> activity.runOnUiThread(loadedBroodAdapter::notifyDataSetChanged);
         executorService.scheduleAtFixedRate(runnable, 1, 500, TimeUnit.MILLISECONDS);
     }
 

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:id="@+id/broodDisplay"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="86dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="?android:selectableItemBackground">
+
+    <ImageView
+        android:id="@+id/thumbnail_image"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="4dp"
+        android:layout_marginTop="4dp"
+        android:layout_toEndOf="@id/thumbnail_image"
+        android:layout_toRightOf="@id/thumbnail_image"
+        android:orientation="vertical"
+        android:padding="4dp">
+        <TextView
+            android:id="@+id/recycle_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textColor="@color/abc_primary_text_material_dark"
+            android:textSize="15sp"
+            tools:text="Title"
+            tools:ignore="PrivateResource" />
+        <TextView
+            android:id="@+id/recycle_brood_phase_now"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:textSize="15sp"
+            android:textColor="@color/abc_secondary_text_material_dark"
+            tools:text="phase 0 eind is al 5 min en 56s bezig"
+            />
+        <TextView
+            android:id="@+id/recycle_brood_phase_incomming"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:textSize="15sp"
+            android:textColor="@color/abc_secondary_text_material_dark"
+            tools:text="nog 5 min en 4s tot phase 1 begin"
+            />
+    </LinearLayout>
+</RelativeLayout>
