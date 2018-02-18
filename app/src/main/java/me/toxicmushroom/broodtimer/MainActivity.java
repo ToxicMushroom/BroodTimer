@@ -105,8 +105,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (id == R.id.action_reset) {
-            for (Broden brood : myDBHandler.getAlleBroden()) {
-                myDBHandler.deleteBrood(brood.get_broodnaam());
+            for (Broden brood : myDBHandler.getLoadedBroden()) {
+                myDBHandler.setLoadedState(brood.get_broodnaam(), false);
                 PhaseService.toStop.add(brood.get_broodnaam());
             }
         }
