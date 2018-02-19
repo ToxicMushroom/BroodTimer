@@ -30,4 +30,7 @@
     <string name="save">Save</string>
     <string name="load">load</string>
     <string name="edit">edit</string>
+    <string name="delete">delete</string>
+    <string name="unload">unload</string>
+    <string name="title_activity_test123">test123</string>
 </resources>

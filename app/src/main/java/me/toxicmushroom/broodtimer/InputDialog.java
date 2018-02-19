@@ -5,9 +5,12 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDialogFragment;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import me.toxicmushroom.broodtimer.activities.AddBroodActivity;
 
@@ -25,8 +28,11 @@ public class InputDialog extends AppCompatDialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.layout_dialog, null);
         inputbox = view.findViewById(R.id.dialog_input);
+        inputbox.setText(AddBroodActivity.valueOfEditing);
+        inputbox.setSelection(inputbox.getText().length());
+
         builder.setView(view)
-                .setTitle("Tijd voor fase " + AddBroodActivity.editing)
+                .setTitle("Tijd voor: " + MainActivity.faseToName(AddBroodActivity.editing))
                 .setNegativeButton("cancel", (dialog, which) -> {
 
                 })
@@ -34,7 +40,20 @@ public class InputDialog extends AppCompatDialogFragment {
                     String inputnummer = inputbox.getText().toString();
                     listener.applyText(inputnummer);
                 });
-        return builder.create();
+
+        final AlertDialog alertDialog = builder.create();
+        inputbox.setOnKeyListener((v, keyCode, event) -> {
+            if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                listener.applyText(inputbox.getText().toString());
+                alertDialog.dismiss();
+                return true;
+            } else {
+                return false;
+            }
+        });
+
+        alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        return alertDialog;
     }
 
     @Override

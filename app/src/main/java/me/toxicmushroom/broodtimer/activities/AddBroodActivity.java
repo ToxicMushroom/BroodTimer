@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -28,6 +30,7 @@ import me.toxicmushroom.broodtimer.reminder.PhaseService;
 public class AddBroodActivity extends AppCompatActivity implements InputDialog.InputDialogListener {
 
     public static int editing = 0;
+    public static String valueOfEditing;
     TextView one;
     TextView two;
     TextView three;
@@ -45,6 +48,10 @@ public class AddBroodActivity extends AppCompatActivity implements InputDialog.I
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_brood);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Brood Loader");
         dbHandler = new MyDBHandler(this, null, null, 0); //deze params worden door de class gedaan
         broodNaamEditor = findViewById(R.id.reminder_title);
         one = findViewById(R.id.tvSettingsPhaseOne);
@@ -119,51 +126,61 @@ public class AddBroodActivity extends AppCompatActivity implements InputDialog.I
 
     public void setPhaseOne(View view) {
         editing = 1;
+        valueOfEditing = one.getText().toString();
         openDialog();
     }
 
     public void setPhaseTwo(View view) {
         editing = 2;
+        valueOfEditing = two.getText().toString();
         openDialog();
     }
 
     public void setPhaseThree(View view) {
         editing = 3;
+        valueOfEditing = three.getText().toString();
         openDialog();
     }
 
     public void setPhaseFour(View view) {
         editing = 4;
+        valueOfEditing = four.getText().toString();
         openDialog();
     }
 
     public void setPhaseFive(View view) {
         editing = 5;
+        valueOfEditing = five.getText().toString();
         openDialog();
     }
 
     public void setPhaseSix(View view) {
         editing = 6;
+        valueOfEditing = six.getText().toString();
         openDialog();
     }
 
     public void setPhaseSeven(View view) {
         editing = 7;
+        valueOfEditing = seven.getText().toString();
         openDialog();
     }
 
     public void setPhaseEight(View view) {
         editing = 8;
+        valueOfEditing = eight.getText().toString();
         openDialog();
     }
 
     public void setPhaseNine(View view) {
         editing = 9;
+        valueOfEditing = nine.getText().toString();
         openDialog();
     }
 
     public void setPhaseTen(View view) {
         editing = 10;
+        valueOfEditing = ten.getText().toString();
         openDialog();
     }
 

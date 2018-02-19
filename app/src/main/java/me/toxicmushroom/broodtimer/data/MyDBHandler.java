@@ -17,7 +17,7 @@ import me.toxicmushroom.broodtimer.reminder.PhaseService;
 
 public class MyDBHandler extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 18;
+    private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "broden.db";
     public static final String TABLE_BRODEN = "broden";
     public static final String COLUMN_BROODNAAM = "broodnaam";
@@ -69,13 +69,13 @@ public class MyDBHandler extends SQLiteOpenHelper {
                 COLUMN_FASE9 + " TEXT, " +
                 COLUMN_FASE10 + " TEXT " +
                 ");");
-
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_BRODEN);
         onCreate(db);
+        db.close();
     }
 
     //voeg een nieuwe rij toe aan de database
@@ -315,7 +315,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
     public void setLoadedState(String broodNaam, boolean loaded) {
         SQLiteDatabase db = getWritableDatabase();
         final int i = loaded ? 1 : 0;
-        String sql = "UPDATE " + TABLE_BRODEN + " SET " + COLUMN_LOADED + "= ? WHERE " + COLUMN_BROODNAAM + "= ?" ;
+        String sql = "UPDATE " + TABLE_BRODEN + " SET " + COLUMN_LOADED + "=? WHERE " + COLUMN_BROODNAAM + "=?" ;
         SQLiteStatement statement = db.compileStatement(sql);
         statement.bindLong(1, i);
         statement.bindString(2, broodNaam);
@@ -338,6 +338,11 @@ public class MyDBHandler extends SQLiteOpenHelper {
                 COLUMN_FASE9 + "=?, " +
                 COLUMN_FASE10 + "=? " +
                 "WHERE " + COLUMN_BROODNAAM + "=?";
+        String sql2 = "UPDATE brodenVooruitgang SET " + COLUMN_BROODNAAM + "=? WHERE " + COLUMN_BROODNAAM + "=?";
+        SQLiteStatement statement2 = db.compileStatement(sql2);
+        statement2.bindString(1, broodje.get_broodnaam());
+        statement2.bindString(2, broodNaam);
+        statement2.execute();
         SQLiteStatement statement = db.compileStatement(sql);
         statement.bindString(1, broodje.get_broodnaam());
         statement.bindLong(2, broodje.getFase1());
@@ -352,5 +357,6 @@ public class MyDBHandler extends SQLiteOpenHelper {
         statement.bindLong(11, broodje.getFase10());
         statement.bindString(12, broodNaam);
         statement.execute();
+        db.close();
     }
 }

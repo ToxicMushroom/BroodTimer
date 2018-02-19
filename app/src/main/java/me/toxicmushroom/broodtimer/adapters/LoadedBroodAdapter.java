@@ -2,7 +2,9 @@ package me.toxicmushroom.broodtimer.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +16,10 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.toxicmushroom.broodtimer.Action;
 import me.toxicmushroom.broodtimer.InputDialog;
+import me.toxicmushroom.broodtimer.InputDialogSure;
+import me.toxicmushroom.broodtimer.MainActivity;
 import me.toxicmushroom.broodtimer.R;
 import me.toxicmushroom.broodtimer.data.Broden;
 import me.toxicmushroom.broodtimer.data.MyDBHandler;
@@ -24,7 +29,7 @@ import me.toxicmushroom.broodtimer.reminder.PhaseService;
  * Created by Merlijn on 4/02/2018.
  */
 
-public class LoadedBroodAdapter extends RecyclerView.Adapter<LoadedBroodAdapter.BroodViewHolder> implements InputDialog.InputDialogListener {
+public class LoadedBroodAdapter extends RecyclerView.Adapter<LoadedBroodAdapter.BroodViewHolder> {
 
     private Context context;
     private List<Broden> brodenList;
@@ -73,6 +78,12 @@ public class LoadedBroodAdapter extends RecyclerView.Adapter<LoadedBroodAdapter.
                     case R.id.action_resume:
                         PhaseService.paused.remove(brood.get_broodnaam());
                         break;
+                    case R.id.action_unload:
+                        MainActivity.action = Action.MAIN_UNLOAD;
+                        MainActivity.broodToUnload = brood;
+                        InputDialogSure inputDialog = new InputDialogSure();
+                        inputDialog.show(((FragmentActivity) context).getSupportFragmentManager(), "test123");
+                        break;
                 }
                 return true;
             });
@@ -81,18 +92,13 @@ public class LoadedBroodAdapter extends RecyclerView.Adapter<LoadedBroodAdapter.
         holder.icon.setImageDrawable(placeHolder);
         holder.title.setText(brood.get_broodnaam());
         holder.currentPhase.setText(myDBHandler.getData("brodenVooruitgang", "currentPhaseTime", brood.get_broodnaam()) + " seconden voorbij.");
-        holder.nextPhase.setText("Nog " + myDBHandler.getData("brodenVooruitgang", "untilPhaseTime", brood.get_broodnaam()) + " seconden tot fase" +
-                myDBHandler.getData("brodenVooruitgang", "nextPhase", brood.get_broodnaam()));
+        holder.nextPhase.setText("Nog " + myDBHandler.getData("brodenVooruitgang", "untilPhaseTime", brood.get_broodnaam()) + " seconden tot " +
+                MainActivity.faseToName(Integer.parseInt(myDBHandler.getData("brodenVooruitgang", "nextPhase", brood.get_broodnaam()))));
     }
 
     @Override
     public int getItemCount() {
         return brodenList.size();
-    }
-
-    @Override
-    public void applyText(String input) {
-
     }
 
     public class BroodViewHolder extends RecyclerView.ViewHolder {

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,9 +17,13 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.toxicmushroom.broodtimer.Action;
 import me.toxicmushroom.broodtimer.InputDialog;
+import me.toxicmushroom.broodtimer.InputDialogSure;
+import me.toxicmushroom.broodtimer.MainActivity;
 import me.toxicmushroom.broodtimer.R;
 import me.toxicmushroom.broodtimer.activities.EditBroodActivity;
+import me.toxicmushroom.broodtimer.activities.LoadBroodActivity;
 import me.toxicmushroom.broodtimer.data.Broden;
 import me.toxicmushroom.broodtimer.data.MyDBHandler;
 import me.toxicmushroom.broodtimer.reminder.PhaseService;
@@ -93,6 +98,13 @@ public class BroodAdapter extends RecyclerView.Adapter<BroodAdapter.BroodViewHol
                         intent.putExtra("fase10", brood.getFase10());
                         context.startService(intent);
                         PhaseService.paused.add(brood.get_broodnaam());
+                        context.startActivity(new Intent(context.getApplicationContext(), MainActivity.class));
+                        break;
+                    case R.id.action_delete:
+                        LoadBroodActivity.action = Action.LIST_REMOVE;
+                        LoadBroodActivity.broodToDelete = brood;
+                        InputDialogSure inputDialog = new InputDialogSure();
+                        inputDialog.show(((FragmentActivity) context).getSupportFragmentManager(), "test123");
                         break;
                 }
                 return true;

@@ -3,6 +3,7 @@ package me.toxicmushroom.broodtimer.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -43,6 +44,10 @@ public class EditBroodActivity extends AppCompatActivity implements InputDialog.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_brood);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Brood Loader");
         dbHandler = new MyDBHandler(this, null, null, 0); //deze params worden door de class gedaan
         broodNaamEditor = findViewById(R.id.reminder_title);
         one = findViewById(R.id.tvSettingsPhaseOne);
