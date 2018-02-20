@@ -69,7 +69,6 @@ public class PhaseService extends Service {
     HashMap<String, Integer> progress = new HashMap<>();
     HashMap<String, Integer> past = new HashMap<>();
     HashMap<String, Integer> nextFases = new HashMap<>();
-
     private void timer(Broden brood) {
         progress.put(brood.get_broodnaam(), 0);
         past.put(brood.get_broodnaam(), 0);
