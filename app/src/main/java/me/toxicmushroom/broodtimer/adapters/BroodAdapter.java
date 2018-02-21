@@ -18,8 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.toxicmushroom.broodtimer.Action;
-import me.toxicmushroom.broodtimer.InputDialog;
-import me.toxicmushroom.broodtimer.InputDialogSure;
+import me.toxicmushroom.broodtimer.dialogs.InputDialog;
+import me.toxicmushroom.broodtimer.dialogs.InputDialogSure;
 import me.toxicmushroom.broodtimer.MainActivity;
 import me.toxicmushroom.broodtimer.R;
 import me.toxicmushroom.broodtimer.activities.EditBroodActivity;

@@ -1,4 +1,4 @@
-package me.toxicmushroom.broodtimer;
+package me.toxicmushroom.broodtimer.dialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -12,6 +12,8 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import me.toxicmushroom.broodtimer.MainActivity;
+import me.toxicmushroom.broodtimer.R;
 import me.toxicmushroom.broodtimer.activities.AddBroodActivity;
 
 /**

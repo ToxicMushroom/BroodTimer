@@ -2,8 +2,9 @@ package me.toxicmushroom.broodtimer.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,8 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.toxicmushroom.broodtimer.Action;
-import me.toxicmushroom.broodtimer.InputDialog;
-import me.toxicmushroom.broodtimer.InputDialogSure;
+import me.toxicmushroom.broodtimer.dialogs.DialogNotify;
+import me.toxicmushroom.broodtimer.dialogs.InputDialogSure;
 import me.toxicmushroom.broodtimer.MainActivity;
 import me.toxicmushroom.broodtimer.R;
 import me.toxicmushroom.broodtimer.data.Broden;
@@ -94,6 +95,18 @@ public class LoadedBroodAdapter extends RecyclerView.Adapter<LoadedBroodAdapter.
         holder.currentPhase.setText(myDBHandler.getData("brodenVooruitgang", "currentPhaseTime", brood.get_broodnaam()) + " seconden voorbij.");
         holder.nextPhase.setText("Nog " + myDBHandler.getData("brodenVooruitgang", "untilPhaseTime", brood.get_broodnaam()) + " seconden tot " +
                 MainActivity.faseToName(Integer.parseInt(myDBHandler.getData("brodenVooruitgang", "nextPhase", brood.get_broodnaam()))));
+
+        if (PhaseService.paused.contains(brood.get_broodnaam())) holder.title.setTextColor(Color.YELLOW); else holder.title.setTextColor(Color.WHITE);
+        if (PhaseService.finished.containsKey(brood.get_broodnaam()) && PhaseService.finished.get(brood.get_broodnaam())) {
+            DialogNotify dialogNotify = new DialogNotify();
+            Bundle bundle = new Bundle();
+            bundle.putString("text", brood.get_broodnaam() + " is klaar");
+            dialogNotify.setArguments(bundle);
+            dialogNotify.show(((FragmentActivity) context).getSupportFragmentManager(), "test123");
+            holder.title.setTextColor(Color.MAGENTA);
+            holder.currentPhase.setText("Finished!");
+            holder.nextPhase.setText("(paused.. can be resumed to restart or unloaded to remove from the list)");
+        }
     }
 
     @Override

@@ -8,7 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
 import me.toxicmushroom.broodtimer.Action;
-import me.toxicmushroom.broodtimer.InputDialogSure;
+import me.toxicmushroom.broodtimer.dialogs.InputDialogSure;
 import me.toxicmushroom.broodtimer.MainActivity;
 import me.toxicmushroom.broodtimer.R;
 import me.toxicmushroom.broodtimer.adapters.BroodAdapter;

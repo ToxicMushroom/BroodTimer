@@ -1,4 +1,4 @@
-package me.toxicmushroom.broodtimer;
+package me.toxicmushroom.broodtimer.dialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatDialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
+
+import me.toxicmushroom.broodtimer.R;
 
 /**
  * Created by Merlijn on 18/02/2018.

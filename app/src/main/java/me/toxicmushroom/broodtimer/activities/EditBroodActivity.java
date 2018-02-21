@@ -13,8 +13,7 @@ import android.widget.Toast;
 import java.util.Arrays;
 import java.util.Collection;
 
-import me.toxicmushroom.broodtimer.InputDialog;
-import me.toxicmushroom.broodtimer.MainActivity;
+import me.toxicmushroom.broodtimer.dialogs.InputDialog;
 import me.toxicmushroom.broodtimer.R;
 import me.toxicmushroom.broodtimer.data.Broden;
 import me.toxicmushroom.broodtimer.data.MyDBHandler;

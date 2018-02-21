@@ -3,25 +3,21 @@ package me.toxicmushroom.broodtimer.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Arrays;
 import java.util.Collection;
 
-import me.toxicmushroom.broodtimer.InputDialog;
+import me.toxicmushroom.broodtimer.dialogs.InputDialog;
 import me.toxicmushroom.broodtimer.MainActivity;
 import me.toxicmushroom.broodtimer.R;
 import me.toxicmushroom.broodtimer.data.Broden;
 import me.toxicmushroom.broodtimer.data.MyDBHandler;
-import me.toxicmushroom.broodtimer.reminder.PhaseService;
 
 /**
  * Created by Merlijn on 27/12/2017.

@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:ellipsize="end"
         android:maxLines="2"
-        android:textColor="@color/abc_primary_text_material_dark"
+        android:textColor="@android:color/white"
         android:textSize="15sp"
         tools:text="Title"
         tools:ignore="PrivateResource" />

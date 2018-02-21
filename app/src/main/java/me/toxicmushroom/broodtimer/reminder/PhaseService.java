@@ -1,10 +1,14 @@
 package me.toxicmushroom.broodtimer.reminder;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
+import android.media.VolumeProvider;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.IBinder;
 import android.widget.Toast;
 
@@ -18,6 +22,7 @@ import java.util.concurrent.TimeUnit;
 import me.toxicmushroom.broodtimer.Stuff;
 import me.toxicmushroom.broodtimer.data.Broden;
 import me.toxicmushroom.broodtimer.data.MyDBHandler;
+import me.toxicmushroom.broodtimer.dialogs.DialogNotify;
 
 /**
  * Created by Merlijn on 4/02/2018.
@@ -69,148 +74,161 @@ public class PhaseService extends Service {
     HashMap<String, Integer> progress = new HashMap<>();
     HashMap<String, Integer> past = new HashMap<>();
     HashMap<String, Integer> nextFases = new HashMap<>();
+    HashMap<String, Integer> rings = new HashMap<>();
+    public static HashMap<String, Boolean> finished = new HashMap<>();
+
     private void timer(Broden brood) {
         progress.put(brood.get_broodnaam(), 0);
         past.put(brood.get_broodnaam(), 0);
         nextFases.put(brood.get_broodnaam(), 1);
         Runnable runnable = () -> {
-            if (toStop.contains(brood.get_broodnaam())) return;
+            if (toStop.contains(brood.get_broodnaam())) {
+                toStop.remove(brood.get_broodnaam());
+                return;
+            }
             int progressInSeconds = progress.get(brood.get_broodnaam());
             int totalTimtPast = past.get(brood.get_broodnaam());
             int nextPhase = nextFases.get(brood.get_broodnaam());
             if (!paused.contains(brood.get_broodnaam())) {
+                finished.put(brood.get_broodnaam(), false);
                 totalTimtPast++;
                 progressInSeconds++;
                 switch (nextPhase) {
                     case 1:
                         if (progressInSeconds == brood.getFase1() * 60) {
-                            try {
-                                Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-                                Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
-                                r.play();
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
+                            AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+                            if (audioManager != null)
+                                audioManager.setStreamVolume(AudioManager.STREAM_NOTIFICATION, 100, 0);
+                            Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                            Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
+                            r.play();
                             nextPhase = 2;
                             progressInSeconds = 0;
+                            paused.add(brood.get_broodnaam());
                         }
                         break;
                     case 2:
                         if (progressInSeconds == brood.getFase2() * 60) {
-                            try {
-                                Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-                                Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
-                                r.play();
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
+                            AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+                            if (audioManager != null)
+                                audioManager.setStreamVolume(AudioManager.STREAM_NOTIFICATION, 100, 0);
+                            Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                            Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
+                            r.play();
                             nextPhase = 3;
                             progressInSeconds = 0;
+                            paused.add(brood.get_broodnaam());
                         }
                         break;
                     case 3:
                         if (progressInSeconds == brood.getFase3() * 60) {
-                            try {
-                                Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-                                Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
-                                r.play();
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
+                            AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+                            if (audioManager != null)
+                                audioManager.setStreamVolume(AudioManager.STREAM_NOTIFICATION, 100, 0);
+                            Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                            Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
+                            r.play();
                             nextPhase = 4;
                             progressInSeconds = 0;
+                            paused.add(brood.get_broodnaam());
                         }
                         break;
                     case 4:
                         if (progressInSeconds == brood.getFase4() * 60) {
-                            try {
-                                Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-                                Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
-                                r.play();
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
+                            AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+                            if (audioManager != null)
+                                audioManager.setStreamVolume(AudioManager.STREAM_NOTIFICATION, 100, 0);
+                            Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                            Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
+                            r.play();
                             nextPhase = 5;
                             progressInSeconds = 0;
+                            paused.add(brood.get_broodnaam());
                         }
                         break;
                     case 5:
                         if (progressInSeconds == brood.getFase5() * 60) {
-                            try {
-                                Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-                                Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
-                                r.play();
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
+                            AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+                            if (audioManager != null)
+                                audioManager.setStreamVolume(AudioManager.STREAM_NOTIFICATION, 100, 0);
+                            Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                            Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
+                            r.play();
                             nextPhase = 6;
                             progressInSeconds = 0;
+                            paused.add(brood.get_broodnaam());
                         }
                         break;
                     case 6:
                         if (progressInSeconds == brood.getFase6() * 60) {
-                            try {
-                                Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-                                Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
-                                r.play();
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
+                            AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+                            if (audioManager != null)
+                                audioManager.setStreamVolume(AudioManager.STREAM_NOTIFICATION, 100, 0);
+                            Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                            Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
+                            r.play();
                             nextPhase = 7;
                             progressInSeconds = 0;
+                            paused.add(brood.get_broodnaam());
                         }
                         break;
                     case 7:
                         if (progressInSeconds == brood.getFase7() * 60) {
-                            try {
-                                Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-                                Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
-                                r.play();
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
+                            AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+                            if (audioManager != null)
+                                audioManager.setStreamVolume(AudioManager.STREAM_NOTIFICATION, 100, 0);
+                            Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                            Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
+                            r.play();
                             nextPhase = 8;
                             progressInSeconds = 0;
+                            paused.add(brood.get_broodnaam());
                         }
                         break;
                     case 8:
                         if (progressInSeconds == brood.getFase8() * 60) {
-                            try {
-                                Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-                                Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
-                                r.play();
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
+                            AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+                            if (audioManager != null)
+                                audioManager.setStreamVolume(AudioManager.STREAM_NOTIFICATION, 100, 0);
+                            Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                            Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
+                            r.play();
                             nextPhase = 9;
                             progressInSeconds = 0;
+                            paused.add(brood.get_broodnaam());
                         }
                         break;
                     case 9:
                         if (progressInSeconds == brood.getFase9() * 60) {
-                            try {
-                                Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-                                Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
-                                r.play();
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
+                            AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+                            if (audioManager != null)
+                                audioManager.setStreamVolume(AudioManager.STREAM_NOTIFICATION, 100, 0);
+                            Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                            Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
+                            r.play();
                             nextPhase = 10;
                             progressInSeconds = 0;
+                            paused.add(brood.get_broodnaam());
                         }
                         break;
                     case 10:
                         if (progressInSeconds == brood.getFase10() * 60) {
-                            try {
-                                Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-                                Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
+                            AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+                            if (audioManager != null)
+                                audioManager.setStreamVolume(AudioManager.STREAM_NOTIFICATION, 100, 0);
+                            Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                            Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
+                            rings.put(brood.get_broodnaam(), 0);
+                            Runnable run = () -> {
+                                if (rings.get(brood.get_broodnaam()) == 10) return;
                                 r.play();
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
+                                rings.put(brood.get_broodnaam(), rings.get(brood.get_broodnaam()) + 1);
+                            };
+                            executorService.scheduleAtFixedRate(run, 200, 200, TimeUnit.MILLISECONDS);
                             nextPhase = 1;
                             progressInSeconds = 0;
-                            stopSelf();
+                            paused.add(brood.get_broodnaam());
+                            finished.put(brood.get_broodnaam(), true);
                         }
                         break;
 
@@ -223,6 +241,8 @@ public class PhaseService extends Service {
         };
         executorService.scheduleAtFixedRate(runnable, 1, 1, TimeUnit.SECONDS);
     }
+
+
 
     @Override
     public void onDestroy() {

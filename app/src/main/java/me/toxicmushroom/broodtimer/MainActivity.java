@@ -10,8 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -22,6 +21,7 @@ import me.toxicmushroom.broodtimer.activities.LoadBroodActivity;
 import me.toxicmushroom.broodtimer.adapters.LoadedBroodAdapter;
 import me.toxicmushroom.broodtimer.data.Broden;
 import me.toxicmushroom.broodtimer.data.MyDBHandler;
+import me.toxicmushroom.broodtimer.dialogs.InputDialogSure;
 import me.toxicmushroom.broodtimer.reminder.PhaseService;
 
 public class MainActivity extends AppCompatActivity implements InputDialogSure.InputDialogSureListener {
@@ -99,6 +99,7 @@ public class MainActivity extends AppCompatActivity implements InputDialogSure.I
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
+            Toast.makeText(getApplicationContext(), "Not available yet", Toast.LENGTH_LONG).show();
             return true;
         }
 
@@ -161,7 +162,7 @@ public class MainActivity extends AppCompatActivity implements InputDialogSure.I
                 return "bakken in oven";
 
             default:
-                return "error";
+                return "fase " + i;
 
         }
     }
