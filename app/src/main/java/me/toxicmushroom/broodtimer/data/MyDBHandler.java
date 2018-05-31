@@ -81,6 +81,9 @@ public class MyDBHandler extends SQLiteOpenHelper {
     //voeg een nieuwe rij toe aan de database
     public void addBrood(Broden brood) {
         SQLiteDatabase db = getWritableDatabase();
+        while (db == null) {
+            db = getWritableDatabase();
+        }
         db.execSQL("DROP TABLE IF EXISTS latestBrood");
         db.execSQL("CREATE TABLE IF NOT EXISTS latestBrood" + " (" +
                 COLUMN_BROODNAAM + " TEXT, " +

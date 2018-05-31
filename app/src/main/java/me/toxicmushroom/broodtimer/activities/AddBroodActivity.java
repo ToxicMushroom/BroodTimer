@@ -103,7 +103,7 @@ public class AddBroodActivity extends AppCompatActivity implements InputDialog.I
                         Integer.valueOf(ten.getText().toString())
                 );
                 dbHandler.addBrood(broodje);
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                startActivity(new Intent(getApplicationContext(), LoadBroodActivity.class));
             } else {
                 Toast.makeText(getApplicationContext(), "Je hebt niet alle waardes ingevuld!", Toast.LENGTH_SHORT).show();
             }

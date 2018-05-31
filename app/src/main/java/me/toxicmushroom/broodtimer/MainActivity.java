@@ -101,6 +101,7 @@ public class MainActivity extends AppCompatActivity implements InputDialogSure.I
         if (id == R.id.action_settings) {
             Toast.makeText(getApplicationContext(), "Not available yet", Toast.LENGTH_LONG).show();
             return true;
+
         }
 
         if (id == R.id.action_reset) {
@@ -119,8 +120,8 @@ public class MainActivity extends AppCompatActivity implements InputDialogSure.I
                 for (Broden brood : myDBHandler.getLoadedBroden()) {
                     myDBHandler.setLoadedState(brood.get_broodnaam(), false);
                     PhaseService.toStop.add(brood.get_broodnaam());
-                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 }
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 break;
             case MAIN_UNLOAD:
                 myDBHandler.setLoadedState(broodToUnload.get_broodnaam(), false);
